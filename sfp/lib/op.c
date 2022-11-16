@@ -15,8 +15,8 @@ unpacked_t add(unpacked_t a, unpacked_t b, bool sign)
         r.exp = b.exp;
         afrac = RSHIFT(afrac, b.exp - a.exp);
     }
-    afrac = LSB_EXPAND_MASK(afrac);
-    bfrac = LSB_EXPAND_MASK(bfrac);
+    // afrac = LSB_EXPAND_MASK(afrac);
+    // bfrac = LSB_EXPAND_MASK(bfrac);
     frac = afrac + bfrac;
     if (RSHIFT(frac, SFP_WIDTH) != 0) {
         r.exp++;

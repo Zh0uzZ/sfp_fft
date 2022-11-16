@@ -1,6 +1,6 @@
 //#include "../tmp/sfp/lib/sfp.hh"
-#include "fft.h"
-#include "mex.h"
+#include "sfp.hh"
+// #include "mex.h"
 #include <cstdio>
 #include <cassert>
 #include <iostream>
@@ -66,7 +66,8 @@ void FFT_1D_Double(double *input_real , double *input_imag , double *output_real
        }
     }
 
-    FFT_1D(F1_real , F1_imag , F2_real , F2_imag , length);
+    // FFT_1D(F1_real , F1_imag , F2_real , F2_imag , length);
+    FFT_1D_SIZE4(F1_real , F1_imag , F2_real , F2_imag , length);
     for(int i=0;i<length;i++){
         // output_real[i] = (p[2].setBits(F2_real[i])).getDouble() * max_double;
         // output_imag[i] = (p[3].setBits(F2_imag[i])).getDouble() * max_double; 
@@ -75,25 +76,25 @@ void FFT_1D_Double(double *input_real , double *input_imag , double *output_real
     }
 }
 
-void mexFunction(int nlhs , mxArray* plhs[] , int nrhs , const mxArray* prhs[]){
-  double *input_real , *input_imag , *output_real , *output_imag;
-  int length;
-  length = mxGetNumberOfElements(I_real);
-  if(*(mxGetPr(I_length)) != length){
-      mexErrMsgIdAndTxt("MATLAB:length is error" , "length is error");
-  }
+// void mexFunction(int nlhs , mxArray* plhs[] , int nrhs , const mxArray* prhs[]){
+//   double *input_real , *input_imag , *output_real , *output_imag;
+//   int length;
+//   length = mxGetNumberOfElements(I_real);
+//   if(*(mxGetPr(I_length)) != length){
+//       mexErrMsgIdAndTxt("MATLAB:length is error" , "length is error");
+//   }
 
-  O_real = mxCreateDoubleMatrix(length , 1 , mxREAL);
-  O_imag = mxCreateDoubleMatrix(length , 1 , mxREAL);
+//   O_real = mxCreateDoubleMatrix(length , 1 , mxREAL);
+//   O_imag = mxCreateDoubleMatrix(length , 1 , mxREAL);
 
-  input_real = mxGetPr(I_real);
-  input_imag = mxGetPr(I_imag);
-  output_real = mxGetPr(O_real);
-  output_imag = mxGetPr(O_imag);
+//   input_real = mxGetPr(I_real);
+//   input_imag = mxGetPr(I_imag);
+//   output_real = mxGetPr(O_real);
+//   output_imag = mxGetPr(O_imag);
   
   
   
   
-  FFT_1D_Double(input_real , input_imag , output_real , output_imag , length);
-  // plhs[1] = mxCreateDoubleMatrix();
-  }
+//   FFT_1D_Double(input_real , input_imag , output_real , output_imag , length);
+//   // plhs[1] = mxCreateDoubleMatrix();
+//   }

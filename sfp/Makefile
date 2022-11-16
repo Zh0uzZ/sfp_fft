@@ -6,7 +6,7 @@ CFLAGS = -std=c99 $(FLAGS)
 CXXFLAGS = -std=c++11 $(FLAGS)
 
 LIB_TARGET = lib/libsfp.a
-LIB_OBJ = lib/op.o lib/pack.o lib/sfp.o lib/utils.o lib/fft_1d.o lib/fft_1dd.o
+LIB_OBJ = lib/op.o lib/pack.o lib/sfp.o lib/utils.o lib/fft_1d.o lib/fft_1dd.o lib/fft_1d_size4.o
 
 TARGET = sfp
 OBJ = main.o $(LIB_TARGET)
