@@ -1,5 +1,5 @@
 //#include "../tmp/sfp/lib/sfp.hh"
-#define MEX
+#define NMEX
 
 #ifdef MEX
 #include "mex.h"
