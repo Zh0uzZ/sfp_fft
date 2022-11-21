@@ -13,6 +13,8 @@ OBJ = main.o $(LIB_TARGET)
 
 all: $(TARGET) $(TEST_TARGET)
 
+# out: $(TARGET) > out.log
+
 clean:
 	-rm -f lib/*.o $(LIB_TARGET)
 	-rm -f *.o $(TARGET)

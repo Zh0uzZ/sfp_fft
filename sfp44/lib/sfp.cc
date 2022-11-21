@@ -6,17 +6,19 @@
 #include <cstdio>
 #include <cmath>
 
+#include <iostream>
 using namespace std;
 
-SFP::SFP(SFP_UTYPE bits, int es, int fs) :
-    bits(bits),
-    es(es),
-    fs(fs)
+using std::cout;
+using std::endl;
+
+SFP::SFP(SFP_UTYPE bits, int es, int fs) : bits(bits),
+                                           es(es),
+                                           fs(fs)
 {
 }
 
-SFP::SFP(int es, int fs) :
-    SFP::SFP(SFP_ZERO, es, fs)
+SFP::SFP(int es, int fs) : SFP::SFP(SFP_ZERO, es, fs)
 {
 }
 
@@ -92,9 +94,12 @@ SFP SFP::abs() const
 
 SFP SFP::prev() const
 {
-    if (isZero()) {
+    if (isZero())
+    {
         return absMin().neg();
-    } else if (*this == min()) {
+    }
+    else if (*this == min())
+    {
         return min();
     }
 
@@ -104,9 +109,12 @@ SFP SFP::prev() const
 
 SFP SFP::next() const
 {
-    if (isZero()) {
+    if (isZero())
+    {
         return absMin();
-    } else if (*this == max()) {
+    }
+    else if (*this == max())
+    {
         return max();
     }
 
@@ -114,13 +122,18 @@ SFP SFP::next() const
     return SFP(LSHIFT(nextbits, SFP_WIDTH - nBits()), es, fs);
 }
 
-SFP SFP::add(const SFP& s) const
+SFP SFP::add(const SFP &s) const
 {
-    if(isZero()) {
+    if (isZero())
+    {
         return s;
-    } else if (s.isZero()) {
+    }
+    else if (s.isZero())
+    {
         return *this;
-    } else if (neg().eq(s)) {
+    }
+    else if (neg().eq(s))
+    {
         return zero();
     }
 
@@ -131,13 +144,18 @@ SFP SFP::add(const SFP& s) const
     return SFP(pack_sfp(ur, es, fs), es, fs);
 }
 
-SFP SFP::sub(const SFP& s) const
+SFP SFP::sub(const SFP &s) const
 {
-    if(isZero()) {
+    if (isZero())
+    {
         return s.neg();
-    } else if (s.isZero()) {
+    }
+    else if (s.isZero())
+    {
         return *this;
-    } else if (eq(s)) {
+    }
+    else if (eq(s))
+    {
         return zero();
     }
 
@@ -147,10 +165,21 @@ SFP SFP::sub(const SFP& s) const
 
     return SFP(pack_sfp(ur, es, fs), es, fs);
 }
-
-SFP SFP::mul(const SFP& s) const
+SFP& SFP::easy_reciprocal(SFP s)
 {
-    if (isZero() || s.isZero()) {
+    SFP_UTYPE exp;
+    int a;
+    unpacked_t ua = unpack_sfp(s.bits, s.es, s.fs);
+    exp = ua.exp;
+    ua.exp = -exp;
+    ua.frac = 0;
+    bits = pack_sfp(ua, s.es, s.fs);
+    return *this;
+}
+SFP SFP::mul(const SFP &s) const
+{
+    if (isZero() || s.isZero())
+    {
         return zero();
     }
 
@@ -161,59 +190,65 @@ SFP SFP::mul(const SFP& s) const
     return SFP(pack_sfp(ur, es, fs), es, fs);
 }
 
-bool SFP::eq(const SFP& s) const
+bool SFP::eq(const SFP &s) const
 {
-    if (isZero() && s.isZero()) {
+    if (isZero() && s.isZero())
+    {
         return true;
     }
     return (bits == s.bits && es == s.es && fs == s.fs);
 }
 
-SFP& SFP::set(SFP s)
+SFP &SFP::set(SFP s)
 {
     bits = pack_sfp(unpack_sfp(s.bits, s.es, s.fs), es, fs);
     return *this;
 }
 
-SFP& SFP::set(float n)
+SFP &SFP::set(float n)
 {
-    switch (fpclassify(n)) {
-        case FP_INFINITE:
-        case FP_NAN:
-            bits = SFP_MAX;
-            break;
-        case FP_ZERO:
-        case FP_SUBNORMAL:
-            bits = SFP_ZERO;
-            break;
-        default:
-            bits = pack_sfp(unpack_float(n), es, fs);
+    switch (fpclassify(n))
+    {
+    case FP_INFINITE:
+    case FP_NAN:
+        bits = SFP_MAX;
+        break;
+    case FP_ZERO:
+    case FP_SUBNORMAL:
+        bits = SFP_ZERO;
+        break;
+    default:
+        bits = pack_sfp(unpack_float(n), es, fs);
     }
     return *this;
 }
 
-SFP& SFP::set(double n)
+SFP &SFP::set(double n)
 {
-    switch (fpclassify(n)) {
-        case FP_INFINITE:
-        case FP_NAN:
-            bits = SFP_MAX;
-            break;
-        case FP_ZERO:
-        case FP_SUBNORMAL:
-            bits = SFP_ZERO;
-            break;
-        default:
-            bits = pack_sfp(unpack_double(n), es, fs);
+    switch (fpclassify(n))
+    {
+    case FP_INFINITE:
+    case FP_NAN:
+        bits = SFP_MAX;
+        break;
+    case FP_ZERO:
+    case FP_SUBNORMAL:
+        bits = SFP_ZERO;
+        break;
+    default:
+        bits = pack_sfp(unpack_double(n), es, fs);
     }
     return *this;
 }
 
-SFP& SFP::resizeTo(int es, int fs)
+SFP &SFP::resizeTo(int es, int fs)
 {
-    if (isZero()) {
+    if (isZero())
+    {
         this->bits = SFP_ZERO;
-    } else {
+    }
+    else
+    {
         this->bits = pack_sfp(unpack_sfp(this->bits, this->es, this->fs), es, fs);
     }
     this->es = es;
@@ -224,7 +259,8 @@ SFP& SFP::resizeTo(int es, int fs)
 
 float SFP::getFloat() const
 {
-    if (isZero()) {
+    if (isZero())
+    {
         return 0.0;
     }
 
@@ -233,14 +269,15 @@ float SFP::getFloat() const
 
 double SFP::getDouble() const
 {
-    if (isZero()) {
+    if (isZero())
+    {
         return 0.0;
     }
 
     return pack_double(unpack_sfp(bits, es, fs));
 }
 
-SFP& SFP::setBits(SFP_UTYPE s)
+SFP &SFP::setBits(SFP_UTYPE s)
 {
     bits = LSHIFT(s, SFP_WIDTH - nBits());
     return *this;
@@ -257,46 +294,61 @@ void SFP::print() const
 
     printf("sfp<%d,%d> ", es, fs);
 
-    for (int i = SFP_WIDTH - 1; i >= SFP_WIDTH - nBits(); i--) {
+    for (int i = SFP_WIDTH - 1; i >= SFP_WIDTH - nBits(); i--)
+    {
         printf("%d", RSHIFT(bits, i) & 1);
     }
 
     printf(" -> ");
     printf(isNeg() ? "-" : "+");
 
-    for (int i = SFP_WIDTH - 2; i >= SFP_WIDTH - nBits(); i--) {
+    for (int i = SFP_WIDTH - 2; i >= SFP_WIDTH - nBits(); i--)
+    {
         printf("%d", RSHIFT(s.bits, i) & 1);
-        if (i != SFP_WIDTH - nBits() && (i == SFP_WIDTH - 1 - s.es)) {
+        if (i != SFP_WIDTH - nBits() && (i == SFP_WIDTH - 1 - s.es))
+        {
             printf(" ");
         }
     }
 
-    printf(" = %g", getFloat());
+    printf(" hex = %03X    ", getBits());
+    printf(" dec = %g", getFloat());
 
     printf("\n");
 }
+void SFP::printbits() const
+{
+    SFP s = abs();
 
-SFP operator+(const SFP& a, const SFP& b)
+    // printf("sfp<%d,%d> ", es, fs);
+    printf("9'b");
+    for (int i = SFP_WIDTH - 1; i >= SFP_WIDTH - nBits(); i--)
+    {
+        printf("%d", RSHIFT(bits, i) & 1);
+    }
+}
+
+SFP operator+(const SFP &a, const SFP &b)
 {
     return a.add(b);
 }
 
-SFP operator-(const SFP& a, const SFP& b)
+SFP operator-(const SFP &a, const SFP &b)
 {
     return a.sub(b);
 }
 
-SFP operator*(const SFP& a, const SFP& b)
+SFP operator*(const SFP &a, const SFP &b)
 {
     return a.mul(b);
 }
 
-SFP operator-(const SFP& a)
+SFP operator-(const SFP &a)
 {
     return a.neg();
 }
 
-bool operator==(const SFP& a , const SFP& b)
+bool operator==(const SFP &a, const SFP &b)
 {
     return a.eq(b);
 }

@@ -35,7 +35,7 @@ extern "C" {
     (SFP_MSB | RSHIFT((frac), 1))
 
 #define LSB_EXPAND_MASK(frac) \
-    ((SFP_UTYPE)0xFF000000 & frac)
+    ((SFP_UTYPE)0xFE000000 & frac)
 
 #ifdef __GNUC__
 #define CLZ(n) \

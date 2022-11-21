@@ -31,6 +31,11 @@ int main(int argc, char *argv[])
     // p[1].set(0.8);p[1].print();
     // ((p[0]+p[1]).resizeTo(4,4)).print();
 
+
+    p[0].set(double(266));
+    cout<<p[0].exp()<<endl;
+    return 0;
+
     // cout<<length<<endl;
     FFT_1D_Double(input_real , input_imag , output_real , output_imag , length);
     for(int i=0;i<num;i++){

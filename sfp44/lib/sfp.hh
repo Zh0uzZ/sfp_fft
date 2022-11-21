@@ -50,6 +50,7 @@ public:
     SFP& set(SFP s);                    // x = s
     SFP& set(float n);                  // x = n
     SFP& set(double n);                 // x = n
+    SFP& easy_reciprocal(SFP s);
 
     SFP& resizeTo(int es, int fs);
 
@@ -60,6 +61,7 @@ public:
     SFP& setBits(SFP_UTYPE bits);
     SFP_UTYPE getBits() const;
     void print() const;
+    void printbits() const;
 };
 
 class SFP33: public SFP

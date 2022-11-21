@@ -43,15 +43,30 @@ void FFT_1D_SIZE4(unsigned *input_real, unsigned *input_imag, unsigned *output_r
     else if (length == 4)
     {
         int i = 0;
-        q[0] = (p[0].setBits(input_real[i]) + p[1].setBits(input_real[i + length / 4]) + p[2].setBits(input_real[i + length / 2]) + p[3].setBits(input_real[i + length / 4 * 3])); //第一列real
-        q[1] = (p[0].setBits(input_real[i]) - p[1].setBits(input_real[i + length / 2]) - p[2].setBits(input_imag[i + length / 4]) + p[3].setBits(input_imag[i + length / 4 * 3])); //第一列real
-        q[2] = (p[0].setBits(input_real[i]) - p[1].setBits(input_real[i + length / 4]) + p[2].setBits(input_real[i + length / 2]) - p[3].setBits(input_real[i + length / 4 * 3])); //第一列real
-        q[3] = (p[0].setBits(input_real[i]) - p[1].setBits(input_real[i + length / 2]) + p[2].setBits(input_imag[i + length / 4]) - p[3].setBits(input_imag[i + length / 4 * 3])); //第一列real
+            q[0] = (p[0].setBits(input_real[i]) + p[1].setBits(input_real[i + length / 4]) + p[2].setBits(input_real[i + length / 2]) + p[3].setBits(input_real[i + length / 4 * 3])); //第一列real
+            // p[0].print();
+            // p[1].print();
+            // p[2].print();
+            // p[3].print();
+            // p[4].print();
+            q[1] = (p[0].setBits(input_real[i]) - p[1].setBits(input_real[i + length / 2]) + p[2].setBits(input_imag[i + length / 4]) - p[3].setBits(input_imag[i + length / 4 * 3])); //第一列real
+            q[2] = (p[0].setBits(input_real[i]) - p[1].setBits(input_real[i + length / 4]) + p[2].setBits(input_real[i + length / 2]) - p[3].setBits(input_real[i + length / 4 * 3])); //第一列real
+            q[3] = (p[0].setBits(input_real[i]) - p[1].setBits(input_real[i + length / 2]) - p[2].setBits(input_imag[i + length / 4]) + p[3].setBits(input_imag[i + length / 4 * 3])); //第一列real
 
-        q[4] = (p[4].setBits(0) - p[0].setBits(input_imag[i]) - p[1].setBits(input_imag[i + length / 4]) - p[2].setBits(input_imag[i + length / 2]) - p[3].setBits(input_imag[i + length / 4 * 3])); //第一列real
-        q[5] = (p[4].setBits(0) - p[0].setBits(input_real[i + length / 4]) + p[1].setBits(input_real[i + length / 4 * 3]) - p[2].setBits(input_imag[i]) + p[3].setBits(input_imag[i + length / 2])); //第一列real
-        q[6] = (p[4].setBits(0) - p[0].setBits(input_imag[i]) + p[1].setBits(input_imag[i + length / 4]) - p[2].setBits(input_imag[i + length / 2]) + p[3].setBits(input_imag[i + length / 4 * 3])); //第一列real
-        q[7] = (p[4].setBits(0) + p[0].setBits(input_real[i + length / 4]) - p[1].setBits(input_real[i + length / 4 * 3]) - p[2].setBits(input_imag[i]) + p[3].setBits(input_imag[i + length / 2])); //第一列real
+            q[4] = (p[0].setBits(input_imag[i]) + p[1].setBits(input_imag[i + length / 4]) + p[2].setBits(input_imag[i + length / 2]) + p[3].setBits(input_imag[i + length / 4 * 3])); //第一列imag
+            // p[0].print();
+            // p[1].print();
+            // p[2].print();
+            // p[3].print();
+            // p[4].print();
+            q[5] = (p[4].setBits(0) - p[0].setBits(input_real[i + length / 4]) + p[1].setBits(input_real[i + length / 4 * 3]) + p[2].setBits(input_imag[i]) - p[3].setBits(input_imag[i + length / 2])); //第一列imag
+            // p[0].print();
+            // p[1].print();
+            // p[2].print();
+            // p[3].print();
+            // p[4].print();
+            q[6] = (p[0].setBits(input_imag[i]) - p[1].setBits(input_imag[i + length / 4]) + p[2].setBits(input_imag[i + length / 2]) - p[3].setBits(input_imag[i + length / 4 * 3])); //第一列imag
+            q[7] = (p[0].setBits(input_real[i + length / 4]) - p[1].setBits(input_real[i + length / 4 * 3]) + p[2].setBits(input_imag[i]) - p[3].setBits(input_imag[i + length / 2])); //第一列imag
 
         // for (int i = 0; i < length / 4; i++)
         // {

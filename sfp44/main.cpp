@@ -1,4 +1,5 @@
 #include "sfp.hh"
+// #include "pack.h"
 #include <cstdio>
 #include <iostream>
 using std::cout;
@@ -32,6 +33,14 @@ int main(int argc, char *argv[])
     // ((p[0]+p[1]).resizeTo(4,4)).print();
 
     // cout<<length<<endl;
+    // p[0].set(double(50));
+    // p[0].print();
+    // cout<<(p[0].exp()) <<endl;
+    // // unpacked_t r = unpack_sfp(p[0].bits , p[0].es , p[0].fs);
+    // p[1].easy_reciprocal(p[0]);
+    // p[1].print();
+    // return 0 ;
+
     FFT_1D_Double(input_real , input_imag , output_real , output_imag , length);
     for(int i=0;i<num;i++){
         cout<<output_real[i]<<"   "<<output_imag[i]<<"i"<<endl;
